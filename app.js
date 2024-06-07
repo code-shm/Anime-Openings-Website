@@ -48,25 +48,13 @@ function showScreen(){
     }
 }
 
-let flag =1;
-function changeHeadText(){
-    if(flag == 0){
-        headText.innerText = "Best Anime Openings";
-        flag =1;
-    } 
-    else if(flag == 1){
-        headText.innerText = songs[songIndex].songName;
-        flag = 0;
-    }
-}
-
 masterPlay.addEventListener('click',function(){
     if(audioElement.paused || audioElement.currentTime <=0){
         audioElement.play();
         masterPlay.classList.remove('fa-play-circle');
         masterPlay.classList.add('fa-pause-circle');
         container.style.backgroundImage = `url('assets/back/${songIndex+1}.jpg')`;
-        changeHeadText();
+        headText.innerText = songs[songIndex].songName;
         gif.style.opacity = 1;
         disScreen();
     } else{
@@ -74,7 +62,7 @@ masterPlay.addEventListener('click',function(){
         masterPlay.classList.remove('fa-pause-circle');
         masterPlay.classList.add('fa-play-circle');
         container.style.backgroundImage = `url('assets/bg.jpg')`
-        changeHeadText();
+        headText.innerText = "Best Anime Openings";
         gif.style.opacity = 0;
         showScreen();
     }
@@ -106,7 +94,7 @@ Array.from(document.getElementsByClassName('songItemPlay')).forEach((element)=>{
         e.target.classList.add('fa-pause-circle');
         audioElement.src = `assets/songs/${songIndex+1}.mp3`;
         container.style.backgroundImage = `url('assets/back/${songIndex+1}.jpg')`;
-        changeHeadText();
+        headText.innerText = songs[songIndex].songName;
         masterSongName.innerText = songs[songIndex].songName;
         audioElement.currentTime= 0;
         audioElement.play();
@@ -127,7 +115,7 @@ document.getElementById('next').addEventListener('click',()=>{
     audioElement.src = `assets/songs/${songIndex+1}.mp3`;
     masterSongName.innerText = songs[songIndex].songName;
     container.style.backgroundImage = `url('assets/back/${songIndex+1}.jpg')`;
-    changeHeadText();
+    headText.innerText = songs[songIndex].songName;
     audioElement.currentTime= 0;
     audioElement.play();
     masterPlay.classList.remove('fa-play-circle');
@@ -145,7 +133,7 @@ document.getElementById('previous').addEventListener('click',()=>{
     }
     audioElement.src = `assets/songs/${songIndex+1}.mp3`;
     container.style.backgroundImage = `url('assets/back/${songIndex+1}.jpg')`;
-    changeHeadText();
+    headText.innerText = songs[songIndex].songName;
     masterSongName.innerText = songs[songIndex].songName;
     audioElement.currentTime= 0;
     audioElement.play();
