@@ -64,16 +64,17 @@ function clickPausePlay(flag){
             audioElement.pause();
             masterPlay.classList.remove('fa-pause-circle');
             masterPlay.classList.add('fa-play-circle');
+            gif.style.opacity = 0;
             flag = 1;
         } else if(flag == 1){
             audioElement.play();
             masterPlay.classList.remove('fa-play-circle');
             masterPlay.classList.add('fa-pause-circle');
+            gif.style.opacity = 1;
             flag = 0;
         }
     })
 }
-
 
 masterPlay.addEventListener('click',function(){
     if(audioElement.paused || audioElement.currentTime <=0){
