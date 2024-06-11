@@ -1,7 +1,5 @@
 console.log("Welcome to Spotify");
 
-
-// Intialize the variables
 let songIndex = 0;
 let audioElement = new Audio('assets/songs/1.mp3');
 let masterPlay = document.getElementById('masterPlay');
@@ -18,6 +16,7 @@ let headText = document.getElementById('headText')
 for(item of songColor){
     item.style.color = '#00FF00';
 }
+
 let songs =[
     {songName: "Hikaru Nara -Your Lie in April", filePath: "assets/songs/1.mp3", coverPath: "assets/covers/1.jpeg"},
     {songName: "Hacking To the Gate -Stiens Gate", filePath: "assets/songs/2.mp3", coverPath: "assets/covers/2.jpeg"},
@@ -28,7 +27,17 @@ let songs =[
     {songName: "The World -Death Note", filePath: "assets/songs/7.mp3", coverPath: "assets/covers/7.jpeg"},
     {songName: "Silhoutte - Naruto", filePath: "assets/songs/8.mp3", coverPath: "assets/covers/8.jpeg"},
     {songName: "Blue Bird -Naruto", filePath: "assets/songs/9.mp3", coverPath: "assets/covers/9.jpeg"},
-    {songName: "Fly High -Haikyuu", filePath: "assets/songs/10.mp3", coverPath: "assets/covers/10.jpeg"}
+    {songName: "Fly High -Haikyuu", filePath: "assets/songs/10.mp3", coverPath: "assets/covers/10.jpeg"},
+    // {songName: "Blue Bird -Naruto", filePath: "assets/songs/9.mp3", coverPath: "assets/covers/9.jpeg"},
+    // {songName: "Blue Bird -Naruto", filePath: "assets/songs/9.mp3", coverPath: "assets/covers/9.jpeg"},
+    // {songName: "Blue Bird -Naruto", filePath: "assets/songs/9.mp3", coverPath: "assets/covers/9.jpeg"},
+    // {songName: "Blue Bird -Naruto", filePath: "assets/songs/9.mp3", coverPath: "assets/covers/9.jpeg"},
+    // {songName: "Blue Bird -Naruto", filePath: "assets/songs/9.mp3", coverPath: "assets/covers/9.jpeg"},
+    // {songName: "Blue Bird -Naruto", filePath: "assets/songs/9.mp3", coverPath: "assets/covers/9.jpeg"},
+    // {songName: "Blue Bird -Naruto", filePath: "assets/songs/9.mp3", coverPath: "assets/covers/9.jpeg"},
+    // {songName: "Blue Bird -Naruto", filePath: "assets/songs/9.mp3", coverPath: "assets/covers/9.jpeg"},
+    // {songName: "Blue Bird -Naruto", filePath: "assets/songs/9.mp3", coverPath: "assets/covers/9.jpeg"},
+    // {songName: "Blue Bird -Naruto", filePath: "assets/songs/9.mp3", coverPath: "assets/covers/9.jpeg"}
 ]
 
 songItems.forEach((elements, i) => {
@@ -48,23 +57,48 @@ function showScreen(){
     }
 }
 
+
+function clickPausePlay(flag){
+    container.addEventListener('click', function(){
+        if(flag == 0){
+            audioElement.pause();
+            masterPlay.classList.remove('fa-pause-circle');
+            masterPlay.classList.add('fa-play-circle');
+            flag = 1;
+        } else if(flag == 1){
+            audioElement.play();
+            masterPlay.classList.remove('fa-play-circle');
+            masterPlay.classList.add('fa-pause-circle');
+            flag = 0;
+        }
+    })
+}
+
+
 masterPlay.addEventListener('click',function(){
     if(audioElement.paused || audioElement.currentTime <=0){
         audioElement.play();
         masterPlay.classList.remove('fa-play-circle');
         masterPlay.classList.add('fa-pause-circle');
         container.style.backgroundImage = `url('assets/back/${songIndex+1}.jpg')`;
+        // container.classList.remove('container');
+        // container.classList.add('playContainer')
         headText.innerText = songs[songIndex].songName;
         gif.style.opacity = 1;
         disScreen();
+        let flag = 0;
+        clickPausePlay(flag);
     } else{
         audioElement.pause();
         masterPlay.classList.remove('fa-pause-circle');
         masterPlay.classList.add('fa-play-circle');
         container.style.backgroundImage = `url('assets/bg.jpg')`
+        // container.classList.add('container');
+        // container.classList.remove('playContainer')
         headText.innerText = "Best Anime Openings";
         gif.style.opacity = 0;
         showScreen();
+        let flag = 1;
     }
 })
 
@@ -94,6 +128,8 @@ Array.from(document.getElementsByClassName('songItemPlay')).forEach((element)=>{
         e.target.classList.add('fa-pause-circle');
         audioElement.src = `assets/songs/${songIndex+1}.mp3`;
         container.style.backgroundImage = `url('assets/back/${songIndex+1}.jpg')`;
+        // container.classList.remove('container');
+        // container.classList.add('playContainer')
         headText.innerText = songs[songIndex].songName;
         masterSongName.innerText = songs[songIndex].songName;
         audioElement.currentTime= 0;
@@ -107,7 +143,7 @@ Array.from(document.getElementsByClassName('songItemPlay')).forEach((element)=>{
 
 document.getElementById('next').addEventListener('click',()=>{
     let pSongIndex = songIndex;
-    if(songIndex>=9){
+    if(songIndex>=songs.length){
         songIndex = 0;
     } else{
         songIndex+=1;
@@ -115,6 +151,8 @@ document.getElementById('next').addEventListener('click',()=>{
     audioElement.src = `assets/songs/${songIndex+1}.mp3`;
     masterSongName.innerText = songs[songIndex].songName;
     container.style.backgroundImage = `url('assets/back/${songIndex+1}.jpg')`;
+    // container.classList.remove('container');
+    // container.classList.add('playContainer')
     headText.innerText = songs[songIndex].songName;
     audioElement.currentTime= 0;
     audioElement.play();
@@ -127,12 +165,14 @@ document.getElementById('next').addEventListener('click',()=>{
 document.getElementById('previous').addEventListener('click',()=>{
     let pSongIndex = songIndex;
     if(songIndex<=0){
-        songIndex = 0;
+        songIndex = songs.length-1;
     } else{
         songIndex-=1;
     }
     audioElement.src = `assets/songs/${songIndex+1}.mp3`;
     container.style.backgroundImage = `url('assets/back/${songIndex+1}.jpg')`;
+    // container.classList.remove('container');
+    // container.classList.add('playContainer')
     headText.innerText = songs[songIndex].songName;
     masterSongName.innerText = songs[songIndex].songName;
     audioElement.currentTime= 0;
@@ -141,5 +181,4 @@ document.getElementById('previous').addEventListener('click',()=>{
     masterPlay.classList.add('fa-pause-circle');
     gif.style.opacity = 1;
     disScreen();
-
 })
